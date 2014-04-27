@@ -140,3 +140,12 @@ num_panel_options = (("One Panel","One Panel ($30 includes application fee)"),
 					("Two Panels","Two Panels ($75; if your work is not accepted, $45 will be refunded)"),
 					("Sculpture","My artwork is sculptural and needs to be displayed on a table ($30 includes app. fee)"))
 
+
+#####  Static Text options for the Scheduler
+ 
+###    Options for schedule blocking
+blocking_text = ((False, 'False'), ('Hard', 'Hard'), ('Soft', 'Soft'))
+
+###    Options for time types
+time_text = (('Start Time', 'Start Time'), ('Stop Time', 'Stop Time'),
+             ('Hard Time', 'Hard Time'), ('Soft Time', 'Soft Time'))
