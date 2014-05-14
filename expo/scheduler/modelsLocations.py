@@ -1,11 +1,15 @@
 from django.db import models
 from django.core.validators import RegexValidator
-from gbetext import *    # all literal text including option sets lives in gbetext.py
-from django.core.serializers.json import json
+
+from scheduler.models import *
+
+# all literal text including option sets lives in gbetext.py
+from gbetext import *
+
 
 ###  Object classes to manage locations and rooms.
 
-class Locations(models.Model, Schedulable, Properties):
+class Locations(Schedulable, Properties, models.Model):
     '''
     The types of locations available at the event site.  Has
     Properties for the various qualities of the space (has carpet

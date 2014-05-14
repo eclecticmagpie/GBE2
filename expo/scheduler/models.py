@@ -1,8 +1,9 @@
 from django.db import models
 from django.core.validators import RegexValidator
-from gbetext import *    # all literal text including option sets lives in gbetext.py
-from utilsJson import *  # JSON utilities for packing and unpacking
-from modelLocations import *  # data objects for Locations (rooms, theaters, etc)
+
+# all literal text including option sets lives in gbetext.py
+from gbetext import *
+
 
 ##  Object classes for the scheduler and calendar portions of the
 ##  GBE web app
@@ -13,28 +14,15 @@ class Properties(models.Model):
     chain to give an object properties and property checking.
     '''
 
-    property_name = models.CharField(max_length = 32)
+    property_name = models.CharField(max_length = 256)
 
-    def properties(self):
-        '''
-        Returns the properties this object has as a JSON list.
-        '''
-
-        return self
-
-class _Property(models.Model):
-    '''
-    Handlers for each individual property within properties.
-    '''
-
-    prop = models.ForeignKey(Properties)
-
-    ###  prop_info (Property Information) is stored in the DB as a
+    ###  property_info (Property Information) is stored in the DB as a
     ###  JSON obect, is set in the forms file, and is a set of 
     ###  key:field information, describing the properties of the
     ###  item the properties object is attached to.
-    prop_info = models.CharField(max_length = 2048)
-    
+    property_info = models.CharField(max_length = 64)
+
+
 
 class MasterEvent(models.Model):
     '''
@@ -54,7 +42,9 @@ class MasterEvent(models.Model):
             corrospond to a subtype field on that table.
         event_type - The types of events the MasterEvent can contain.
     '''
-    
+
+    name = models.CharField(max_length = 32)
+    description = models.TextField()
     start_time = models.DateTimeField(time_text[0])
     stop_time = models.DateTimeField(time_text[1])
     blocking = models.CharField(max_length=8, choices = blocking_text,
