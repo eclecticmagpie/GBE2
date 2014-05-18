@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 from scheduler.models import *
-from scheduler.modelsLocations import Locations
 
 admin.site.register(MasterEvent)
 admin.site.register(Event)
