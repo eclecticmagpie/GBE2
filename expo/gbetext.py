@@ -59,11 +59,11 @@ vendor_lighting_options = (('White', 'White'),
                           ('No lights (not recommended)', 'No lights'))
 
 
-acceptance_states = {(0,'No Decision'),
+acceptance_states = ((0,'No Decision'),
                      (1,'Reject'),
                       (2,'Wait List'), 
                       (3,'Accepted'),
-                      }
+                      )
 
 bid_states = (("Draft", "Draft"),
               ("Submitted", "Submitted"),
@@ -144,7 +144,7 @@ num_panel_options = (("One Panel","One Panel ($30 includes application fee)"),
 #####  Static Text options for the Scheduler
  
 ###    Options for schedule blocking
-blocking_text = ((False, 'False'), ('Hard', 'Hard'), ('Soft', 'Soft'))
+blocking_text = (('False', False), ('Hard', 'Hard'), ('Soft', 'Soft'))
 
 ###    Options for time types
 time_text = (('Start Time', 'Start Time'), ('Stop Time', 'Stop Time'),

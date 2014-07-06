@@ -16,15 +16,29 @@ class Properties(models.Model):
 
     property_name = models.CharField(max_length = 256)
 
-    ###  property_info (Property Information) is stored in the DB as a
-    ###  JSON obect, is set in the forms file, and is a set of 
-    ###  key:field information, describing the properties of the
-    ###  item the properties object is attached to.
+    def __unicode__(self):
+        return self.property_name
+
+class Property(models.Model):
+    '''
+    Individual Property handler, allows a property to have multiple
+    field values, such as True/False, Integer, Choice List, etc.
+    '''
+
     property_info = models.CharField(max_length = 64)
 
+    def __unicode__(self):
+        return self.property_info
 
+class EventTypes(models.Model):
+    '''
+    Choice List of Event Types, included in the Events to control
+    what kind of an event an Event is.
+    '''
 
-class MasterEvent(models.Model):
+    event_types = models.CharField(max_length=256, default = 'Event')
+
+class MasterEvent(EventTypes, models.Model):
     '''
     A container object, within which event objects and item resources
     can be assigned.  Requires a start and stop date/time to be created.
@@ -43,7 +57,7 @@ class MasterEvent(models.Model):
         event_type - The types of events the MasterEvent can contain.
     '''
 
-    name = models.CharField(max_length = 32)
+    name = models.CharField(max_length = 128)
     description = models.TextField()
     start_time = models.DateTimeField(time_text[0])
     stop_time = models.DateTimeField(time_text[1])
@@ -54,9 +68,12 @@ class MasterEvent(models.Model):
     ###  Gets packed into JSON objects in the forms file.
     item_list = models.CharField(max_length = 2048)
     viewable = models.CharField(max_length = 2048)
-    event_type = models.CharField(max_length = 2048)
+    ##event_type = models.CharField(max_length = 256, choices = event_types)
 
-class Event(models.Model):
+    def __unicode__(self):
+        return self.name
+
+class Event(EventTypes, models.Model):
     '''
     A container object to describe events on the timeline of the
     Master Event object.  Can be recursively assigned.
@@ -77,6 +94,7 @@ class Event(models.Model):
         event_type - The types of events this event can contain.
     '''
 
+    name = models.CharField(max_length = 128)
     hard_time = models.TimeField(time_text[2])
     soft_time = models.TimeField(time_text[3])
     blocking = models.CharField(max_length=8, choices = blocking_text,
@@ -86,8 +104,11 @@ class Event(models.Model):
     ###  The below options are JSON object stored in the DB.
     ###  The are pack into JSON objects in the forms file.
     viewable = models.CharField(max_length=2048)
-    event_type = models.CharField(max_length=2048)
+    ##event_type = models.CharField(max_length = 256, choices = event_types)
     item_list = models.CharField(max_length=2048)
+
+    def __unicode__(self):
+        return self.name  
 
 class Schedulable(models.Model):
     '''
@@ -122,9 +143,6 @@ class Locations(Schedulable, Properties, models.Model):
     or no, has movement space, has tables and chairs, etc).
     '''
 
-    def __str__(self):
-        return name
-
     name = models.CharField(max_length=32)
     description = models.TextField()
 
@@ -134,5 +152,7 @@ class Locations(Schedulable, Properties, models.Model):
     ###  otherwise, is a type of property
     room_type = models.CharField(max_length=16)
 
+    def __unicode__(self):
+        return self.name
 
 ##  This program has been brought to you by the language c and the number F.
