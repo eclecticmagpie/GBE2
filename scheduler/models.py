@@ -73,7 +73,7 @@ class MasterEvent(EventTypes, models.Model):
     def __unicode__(self):
         return self.name
 
-class Event(EventTypes, models.Model):
+class SchedEvent(EventTypes, models.Model):
     '''
     A container object to describe events on the timeline of the
     Master Event object.  Can be recursively assigned.

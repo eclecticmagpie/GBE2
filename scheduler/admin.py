@@ -19,12 +19,12 @@ class MasterEventTabularInline(admin.TabularInline):
         ('Event Types',{'fields': ['event_type']}),
         ]
 
-class EventTabularInline(admin.TabularInline):
+class SchedEventTabularInline(admin.TabularInline):
     '''
     Tool to create and enter data into an Event.
     '''
 
-    model = Event
+    model = SchedEvent
     
     fieldsets = [
         ('Event Name', {'fields': ['name']}),
@@ -45,7 +45,7 @@ class EventIncludes(admin.ModelAdmin):
         ('Viewable', {'fields': ['viewable']}),
         ]
 
-    inlines = [MasterEventTabularInline, EventTabularInline]
+    inlines = [MasterEventTabularInline, SchedEventTabularInline]
 
 class EventTypesInline(admin.TabularInline):
     '''
@@ -96,7 +96,7 @@ class LocationsTabularInline(admin.TabularInline):
 	      ]
 
 admin.site.register(MasterEvent)
-admin.site.register(Event)
+admin.site.register(SchedEvent)
 #admin.site.register(Items)
 admin.site.register(Locations)
 admin.site.register(Properties)
