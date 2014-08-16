@@ -7,13 +7,13 @@
         <li class='has-sub'><a href='/ticketing/'><span>I Want To...</span></a>
           <ul>
              <li><a href='/ticketing/'><span>Buy Tickets</span></a></li>
-             <li><a href='/act/create/'><span>Perform at the Expo</span></a></li>
-             <li><a href='/class/create/'><span>Submit A Class</span></a></li>
-             <li><a href='/class/propose/'><span>Suggest A Class or Panel</span></a></li>
+             <li><a href='{% url 'act_create' %}'><span>Perform at the Expo</span></a></li>
+             <li><a href='{% url 'class_create' %}'><span>Submit A Class</span></a></li>
+             <li><a href='{% url 'propose_class' %}'><span>Suggest A Class or Panel</span></a></li>
              <li><a href='/bid/panelsit/'><span>Sit On A Panel</span></a></li>
-             <li><a href='/volunteer/bid'><span>Volunteer</span></a></li>
+             <li><a href='{% url 'volunteer_create' %}'><span>Volunteer</span></a></li>
              <li><a href='/bid/costume/'><span>Display Costume</span></a></li>
-             <li><a href='/vendor/bid'><span>Sell My Stuff</span></a></li>
+             <li><a href='{% url 'vendor_create' %}'><span>Sell My Stuff</span></a></li>
              <li><a href='/bid/ad/'><span>Advertise</span></a></li>
              <li class='last'><a href='/hotel'><span>Reserve a Hotel Room</span></a></li>
           </ul>
