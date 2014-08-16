@@ -121,6 +121,9 @@ urlpatterns = patterns ('',
                             {'post_reset_redirect' : '/accounts/password/reset/complete/'},
                             name="password_reset_confirm"),
                         url(r'^accounts/password/reset/complete/?$', 
-                            password_reset_complete)
-                        
+                            password_reset_complete),
+
+# miscellaneous and logistics
+                        url(r'^hotel/?$',
+                        views.hotel, name = 'hotel'),
                         ) 

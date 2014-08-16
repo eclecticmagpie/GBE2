@@ -3,7 +3,7 @@
 {% endcomment %}    
       <div id='cssmenu'>
       <ul>
-        <li class='active'><a href='/'><span>Home</span></a></li>
+        <li class='active'><a href='{% url 'home' %}'><span>Home</span></a></li>
         <li class='has-sub'><a href='/ticketing/'><span>I Want To...</span></a>
           <ul>
              <li><a href='/ticketing/'><span>Buy Tickets</span></a></li>
@@ -15,22 +15,22 @@
              <li><a href='/bid/costume/'><span>Display Costume</span></a></li>
              <li><a href='{% url 'vendor_create' %}'><span>Sell My Stuff</span></a></li>
              <li><a href='/bid/ad/'><span>Advertise</span></a></li>
-             <li class='last'><a href='/hotel'><span>Reserve a Hotel Room</span></a></li>
+             <li class='last'><a href='{% url 'hotel' %}'><span>Reserve a Hotel Room</span></a></li>
           </ul>
        </li>
-       <li class='has-sub'><a href='Schedule'><span>Shows</span></a>
+       <li class='has-sub'><a href='{%url 'show_schedule' %}'><span>Shows</span></a>
           <ul>
-             <li><a href='DisplayEvent/1'><span>Rhinestone Review</span></a></li>
-             <li><a href='DisplayEvent/2'><span>Late Friday</span></a></li>
-             <li><a href='#'><span>The Main Event</span></a></li>
-             <li class='last'><a href='DisplayEvent/4'><span>Sunday Showcase</span></a></li>
+             <li><a href='{% url 'display_event' event_id=1 %}'><span>Rhinestone Review</span></a></li>
+             <li><a href='{% url 'display_event' event_id=2 %}'><span>Late Friday</span></a></li>
+             <li><a href='{% url 'display_event' event_id=3 %}'><span>The Main Event</span></a></li>
+             <li class='last'><a href='{% url 'display_event' event_id=4 %}'><span>Sunday Showcase</span></a></li>
           </ul>
        </li>
-       <li class='has-sub'><a href='Conference'><span>The Conference</span></a>
+       <li class='has-sub'><a href='{% url 'conference' %}'><span>The Conference</span></a>
           <ul>
-             <li><a href='Calendar'><span>Class Schedule</span></a></li>
-             <li><a href='Schedule'><span>Class Descriptions</span></a></li>
-             <li class='last'><a href='Bio'><span>Teachers</span></a></li>
+             <li><a href='{% url 'scheduler_class' %}'><span>Class Schedule</span></a></li>
+             <li><a href='{% url 'class_list' %}'><span>Class Descriptions</span></a></li>
+             <li class='last'><a href=''><span>Teachers</span></a></li>
           </ul>
        </li>
        <li class='has-sub'><a href='Events'><span>Events at GBE</span></a>
