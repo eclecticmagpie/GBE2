@@ -113,7 +113,7 @@ urlpatterns = patterns ('',
                         url(r'^accounts/password/reset/?$',
                             password_reset,
                             {'post_reset_redirect' : '/accounts/password/reset/done/'},
-                            name="password_reset"),
+                            name='password_reset'),
                         url(r'^accounts/password/reset/done/?$',
                             password_reset_done, name = 'password_reset_done'),
                         url(r'^accounts/password/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', 
@@ -125,5 +125,5 @@ urlpatterns = patterns ('',
 
 # miscellaneous and logistics
                         url(r'^hotel/?$',
-                        views.hotel, name = 'hotel'),
+                        views.reserve_hotel, name = 'reserve_hotel'),
                         ) 

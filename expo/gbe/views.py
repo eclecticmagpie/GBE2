@@ -1070,4 +1070,8 @@ def propose_class (request):
         context = RequestContext (request, {'form': form})
         return HttpResponse(template.render(context))
 
-
+def reserve_hotel(request):
+	'''
+	Handle hotel reservations	
+	'''
+	return render (request, 'gbe/hotel.tmpl', {})

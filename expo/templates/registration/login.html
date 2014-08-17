@@ -11,7 +11,7 @@
 <br><br>
   <form action="" method=post>
     {% csrf_token %}
-    <a href="/accounts/password/reset/">Help!</a> I forgot my password!
+    <a href='{% url 'password_reset' %}'>Help!</a> I forgot my password!
     <br><br>
     <table>
     <tr>

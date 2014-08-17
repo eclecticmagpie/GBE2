@@ -724,4 +724,11 @@ class ProfilePreferences(models.Model):
     inform_about = models.TextField(blank=True)
     show_hotel_infobox = models.BooleanField(default=True)
 
-    
+   
+
+def reserve_hotel (request):
+    '''                                                                                                                                                                                                     
+    Reserve a hotel room. Dummy function for menu                                                                                                                                                           
+    '''
+    return render_to_response(request, 'gbe/hotel.tmpl', {})
+ 

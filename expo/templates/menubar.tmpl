@@ -15,32 +15,32 @@
              <li><a href='/bid/costume/'><span>Display Costume</span></a></li>
              <li><a href='{% url 'vendor_create' %}'><span>Sell My Stuff</span></a></li>
              <li><a href='/bid/ad/'><span>Advertise</span></a></li>
-             <li class='last'><a href='{% url 'hotel' %}'><span>Reserve a Hotel Room</span></a></li>
+             <li class='last'><a href='{% url 'reserve_hotel' %}'><span>Reserve a Hotel Room</span></a></li>
           </ul>
        </li>
-       <li class='has-sub'><a href='{%url 'show_schedule' %}'><span>Shows</span></a>
+       <li class='has-sub'><a href='/Show/Schedule'><span>Shows</span></a> 
           <ul>
-             <li><a href='{% url 'display_event' event_id=1 %}'><span>Rhinestone Review</span></a></li>
-             <li><a href='{% url 'display_event' event_id=2 %}'><span>Late Friday</span></a></li>
-             <li><a href='{% url 'display_event' event_id=3 %}'><span>The Main Event</span></a></li>
-             <li class='last'><a href='{% url 'display_event' event_id=4 %}'><span>Sunday Showcase</span></a></li>
+             <li><a href='/DisplayEvent/1/'><span>Rhinestone Review</span></a></li>
+             <li><a href='/DisplayEvent/2/'><span>Late Friday</span></a></li>
+             <li><a href='/DisplayEvent/3/'><span>The Main Event</span></a></li>
+             <li class='last'><a href='/Display/Event/4/'><span>Sunday Showcase</span></a></li> 
           </ul>
        </li>
-       <li class='has-sub'><a href='{% url 'conference' %}'><span>The Conference</span></a>
+       <li class='has-sub'><a href='/Conference'><span>The Conference</span></a>
           <ul>
-             <li><a href='{% url 'scheduler_class' %}'><span>Class Schedule</span></a></li>
-             <li><a href='{% url 'class_list' %}'><span>Class Descriptions</span></a></li>
-             <li class='last'><a href=''><span>Teachers</span></a></li>
+             <li><a href='/Class/Schedule'><span>Class Schedule</span></a></li>
+             <li><a href='/Class/Details'><span>Class Descriptions</span></a></li>
+             <li class='last'><a href='/Teacher/Bios'><span>Teachers</span></a></li>
           </ul>
        </li>
-       <li class='has-sub'><a href='Events'><span>Events at GBE</span></a>
+       <li class='has-sub'><a href='/Events'><span>Events at GBE</span></a>
           <ul>
-             <li><a href='Schedule'><span>All Events</span></a></li>
-             <li class='last'><a href='Calendar'><span>Schedule Of Events</span></a></li>
+             <li><a href='/Schedule'><span>All Events</span></a></li>
+             <li class='last'><a href='/Calendar'><span>Schedule Of Events</span></a></li>
           </ul>
        </li>
        <li><a href='/fashionfair'><span>Vintage Fashion Fair</span></a></li>
-       <li class='has-sub last'><a href='About'><span>About Us/Contact</span></a>
+       <li class='has-sub last'><a href='/About'><span>About Us/Contact</span></a>
           <ul>
              <li><a href='/contact'><span>Contact</span></a></li>
              <li class='last'><a href='/staffbio'><span>Staff</span></a></li>
@@ -88,9 +88,9 @@
           </ul>
        </li>
        {% else %}
-       <li class='has-sub'><a href='/accounts/login'><span>Login</span></a>
+       <li class='has-sub'><a href='{% url 'login' %}'><span>Login</span></a>
           <ul>
-             <li><a href='/accounts/register/'><span>Register</span></a></li>
+             <li><a href='{% url 'register' %}'><span>Register</span></a></li>
           </ul>
        {% endif %}
     </ul>
