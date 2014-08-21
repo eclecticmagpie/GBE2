@@ -24,3 +24,9 @@ expo/expo/__init__.pyc
 expo/gbe/templates/gbe/GBE2.komodoproject
 
 Text-1.txt
+
+*.py
+
+expo/gbe/templates/gbe/submission.tmpl
+
+expo/gbe/views.py

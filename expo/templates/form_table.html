@@ -16,17 +16,23 @@
     {% for field in form.visible_fields %}
         <tr>
             <td class="form_label">
-              {% if field.css_classes == 'required' %}
-              <font color="red">*</font>
-              {% elif field.errors %}
+	      
+              {% if field.errors %}
               <font color="red">!</font>&nbsp;&nbsp;
+	      {% elif field.css_classes == 'required' or field.name in submit_fields %}
+              <font color="red">*</font>
               {% else %}
                
               {% endif %} 
               {% if field.errors %}
                 <font color="red">
-              {% endif %} 
-              {{ field.label_tag }} 
+              {% endif %}
+              {% if field.name in draft_fields %}
+	        <b>{{ field.label_tag }}</b>
+	      {% else %}
+	        {{ field.label_tag }}
+	      {% endif %}
+
               {% if field.errors %}
                 </font>
               {% endif %} 

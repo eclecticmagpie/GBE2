@@ -83,7 +83,6 @@ class PersonaForm (forms.ModelForm):
                    'experience',
                    'awards', 
                    'promo_image',
-                   'festivals',
                    'performer_profile',
                    'contact'
         ]
@@ -112,20 +111,47 @@ class ComboForm (forms.ModelForm):
 class ActEditForm(forms.ModelForm):
     required_css_class = 'required'
     error_css_class = 'error'
-    help_texts=act_help_texts
-    act_duration = DurationFormField(required=False)
-    track_duration = DurationFormField(required=False)
+    act_duration = DurationFormField(required=False, help_text = act_help_texts['act_duration'])
+    track_duration = DurationFormField(required=False, help_text = act_help_texts['track_duration'],
+                                       label = act_bid_labels['track_duration'])
     track_artist = forms.CharField(required=False)
     track_title = forms.CharField(required=False)
     shows_preferences = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                                   choices=act_shows_options,
-                                                  label=act_bid_labels['shows_preferences'])
+                                                  label=act_bid_labels['shows_preferences'],
+                                                  help_text = act_help_texts['shows_preferences'])
+    description = forms.CharField(required=True,
+                                  label = act_bid_labels['description'],
+                                  help_text = act_help_texts['description'],
+                                  widget = forms.Textarea)
+
     class Meta:
         model = Act
         fields, required = Act().bid_fields
         fields += ['act_duration', 'track_duration', 'track_artist', 'track_title']
         labels = act_bid_labels
-        
+        help_texts=act_help_texts
+  
+class ActEditDraftForm(forms.ModelForm):
+    required_css_class = 'required'
+    error_css_class = 'error'
+    act_duration = DurationFormField(required=False, help_text = act_help_texts['act_duration'])
+    track_duration = DurationFormField(required=False, help_text = act_help_texts['track_duration'],
+                                       label = act_bid_labels['track_duration'])
+    track_artist = forms.CharField(required=False)
+    track_title = forms.CharField(required=False)
+    shows_preferences = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                                  choices=act_shows_options,
+                                                  label=act_bid_labels['shows_preferences'],
+                                                  help_text = act_help_texts['shows_preferences'],
+                                                  required=False)
+    class Meta:
+        model = Act
+        fields, required = Act().bid_fields
+        fields += ['act_duration', 'track_duration', 'track_artist', 'track_title']
+        required = Act().bid_draft_fields
+        labels = act_bid_labels
+        help_texts=act_help_texts
 
 
 class BidEvaluationForm(forms.ModelForm):
@@ -144,7 +170,8 @@ class ClassBidForm(forms.ModelForm):
     required_css_class = 'required'
     error_css_class = 'error'
     schedule_constraints = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, 
-                                                     choices = class_schedule_options)
+                                                     choices = class_schedule_options,
+                                                     label = classbid_labels['schedule_constraints'])
  
 
     class Meta:
@@ -153,20 +180,35 @@ class ClassBidForm(forms.ModelForm):
         help_texts = classbid_help_texts
         labels = classbid_labels
 
-class ClassEditForm(forms.ModelForm):
+class ClassBidDraftForm(forms.ModelForm):
     required_css_class = 'required'
     error_css_class = 'error'
+    schedule_constraints = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, 
+                                                     choices = class_schedule_options,
+                                                     required = False,
+                                                     label = classbid_labels['schedule_constraints'])
+    ''' Needed this to override forced required value in Biddable.  Not sure why - it's
+    allowed to be blank '''
+    description = forms.CharField(required=False, 
+                                  widget = forms.Textarea)
+
     class Meta:
         model = Class
-        fields = '__all__'
+        fields, requiredsubmit = Class().get_bid_fields
+        required = Class().get_draft_fields
+        help_texts = classbid_help_texts
+        labels = classbid_labels
+
 
 class VolunteerBidForm(forms.ModelForm):
     title = forms.HiddenInput()
     description = forms.HiddenInput()                            
     availability = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, 
-                                             choices = volunteer_availability_options)
+                                             choices = volunteer_availability_options,
+                                             label = volunteer_labels['availability'])
     unavailability = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, 
-                                             choices = volunteer_availability_options)
+                                             choices = volunteer_availability_options,
+                                             label = volunteer_labels['unavailability'])
 
     interests = forms.MultipleChoiceField(widget= forms.CheckboxSelectMultiple, 
                                           choices = volunteer_interests_options)
@@ -179,14 +221,21 @@ class VolunteerBidForm(forms.ModelForm):
                    'description' : forms.HiddenInput(),
                    'profile' : forms.HiddenInput()}
         labels = volunteer_labels
+        help_texts = volunteer_help_texts
+
 
 class VendorBidForm(forms.ModelForm):
     required_css_class = 'required'
     error_css_class = 'error'
     description = forms.CharField(required=True, 
-                                  widget = forms.Textarea)
+                                  widget = forms.Textarea,
+                                  help_text = vendor_help_texts['description'],
+                                  label = vendor_labels['description'])
     help_times = forms.MultipleChoiceField(widget = forms.CheckboxSelectMultiple,
-                                                choices = vendor_schedule_options)
+                                                choices = vendor_schedule_options,
+                                                required=False,
+                                                label = vendor_labels['help_times'])
+  
     class Meta:
         model=Vendor
         fields = '__all__'
@@ -224,7 +273,7 @@ class ProfilePreferencesForm(forms.ModelForm):
     inform_about=forms.MultipleChoiceField(choices=inform_about_options,
                                            required=False,
                                            widget=forms.CheckboxSelectMultiple(),
-					   label=profile_preferences_labels['inform_about'])
+                                           label=profile_preferences_labels['inform_about'])
     class Meta:
         model = ProfilePreferences
         fields = ['inform_about', 'in_hotel']

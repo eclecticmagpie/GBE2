@@ -102,14 +102,18 @@ volunteer_interests_options = [('VA0', 'Registration'), ('VA1', 'Security/usher'
 volunteer_labels = {
     'number_shifts': 'How many shifts would you like to work?',
     'interests':'What are your particular areas of interest?',
-    'availability': 'I am available...',
-    'unavailability': 'I am unavailable...',
+    'availability': 'I am Available....',
+    'unavailability': 'I am Not Available....',
     'opt_outs': 'Are there events that we should make sure to not schedule you during?',
     'pre_event': 'Are you interested in helping with pre-event tasks?',
     'background': 'Tell us about your background, including relevant skills and experience'
 
 }
 
+volunteer_help_texts = {
+    'pre_event': ('Pre-event tasks could be anything from marketing \
+    to logistics to advertising sales to data entry. In short, \
+    anything we need done before the BurlExpo starts') }
 
 phone_error1 = ['Phone number needed here']
 phone_error2 = ['... or here ']
@@ -127,17 +131,23 @@ act_length_too_long = ("The Act Length is too long.")  # note: this refers to th
                                                        # entered, not the time signified
 
 act_help_texts = {
-    'act_duration':'Length of entire act in mm:ss - please include any time \
-    you are performing before or after your song.', 
-    'song_duration':'Duration of your recorded musical accompaniment',
-    'description':'Please give a brief description of your act. \
+    'shows_preferences':('Check as many as apply to you'),
+    'act_duration':('Length of entire act in mm:ss - please include any time \
+    you are performing before or after your song.'), 
+    'track_duration':('Please enter the duration of your music or backing track in \
+    minutes and seconds. Something that was four minutes and twenty seconds would be \
+    entered as "04:20". Remember, the maximum duration for an act in competition in \
+    The Main Event is 5 minutes for a soloist, 7 minutes for a group'),
+    'description':('Please give a brief description of your act. \
     Stage kittens will retrieve costumes and props, but we cannot clean the stage \
     after your act. Please do not leave anything on the stage (water, glitter, \
-    confetti, etc.)', 
-    'performer': 'Select the stage persona, combo, or troupe who will be \
-    performing. Hit "create" to create a new persona, troupe, or combo.',
-    'video_link' : 'Link to some video of your performance, or a similar act. This \
-    will be used for evaluating your bid, and will not appear on your performer page.'
+    confetti, etc.)'), 
+    'performer': ('Select the stage persona, combo, or troupe who will be \
+    performing. Hit "create" to create a new persona, troupe, or combo.'),
+    'video_link' : ('Link to some video of your performance, or a similar act. This \
+    will be used for evaluating your bid, and will not appear on your performer page.'),
+    'shows_preferences':('Check as many as apply to you'),
+    'video_link':('Make sure to include \'http://\' ')
 }
 
 act_bid_labels = {
@@ -146,11 +156,11 @@ act_bid_labels = {
     'shows_preferences':'I am interested in:',
     'song_title':'Name of Song',
     'song_artist':'Song Artist',
-    'song_duration':'Duration of Song',
+    'track_duration':'Duration of Song',
     'act_duration':'Duration of Act',
     'description':'Description of Act',
     'video_choice':'Video Notes',
-    'why_you':'Why would you like to perform at the expo?',
+    'why_you':'Why Would You Like to Perform at The Great Burlesque Exposition?',
     'video_link':'URL of Video'
 }
 
@@ -230,7 +240,7 @@ advertising and in any schedule of events. The description should be 1-2 paragra
 
 classbid_labels = {
 	'min_size': ('Minimum Size'),
-	'max_size': ('Maximum Students'),
+	'maximum_enrollment': ('Maximum Students'),
 	'history': ('Have You Taught This Class Before?'),
 	'other_teachers': ('Fellow Teachers'),
 	'run_before': 'Has the Class been run Before?',
@@ -297,8 +307,6 @@ panel_help_texts = {
 	where and when.'''),
 }
 
-offsite_vendor_help_text = '''A phone number for your business landline, if \
-different from above.'''
 vendor_description_help_text = '''Please describe your good or services in 250 words \
 or less. We will publish this text on the website.'''
 

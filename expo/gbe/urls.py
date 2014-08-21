@@ -49,7 +49,9 @@ urlpatterns = patterns ('',
                             views.bid_class),
                         url(r'class/edit/(\d+)/?$', 
                             views.edit_class),                        
-                        url(r'^class/propose/?$',
+                         url(r'^class/view/(\d+)/?$',
+                            views.view_class),
+                       url(r'^class/propose/?$',
                             views.propose_class),
                         url(r'^class/review/?$',
                             views.review_class_list),
@@ -57,6 +59,7 @@ urlpatterns = patterns ('',
                             views.review_class),
                         url(r'^class/reviewlist/?$',
                             views.review_class_list),
+
 
 # personae
                         url(r'^performer/create/?$',
@@ -84,8 +87,18 @@ urlpatterns = patterns ('',
                             views.review_volunteer_list),
 
 #vendors 
-                        url(r'^vendor/bid/?$',
+                        url(r'^vendor/create/?$',
                             views.create_vendor),
+                         url(r'^vendor/edit/(\d+)/?$',
+                            views.edit_vendor),
+                        url(r'^vendor/view/(\d+)/?$',
+                            views.view_vendor),
+#                        url(r'^vendor/review/?$',
+#                            views.review_vendor_list),
+#                        url(r'^vendor/review/(\d+)/?$',
+#                            views.review_vendor),
+#                        url(r'^vendor/reviewlist/?$',
+#                            views.review_vendor_list),
 
 # site utility stuff
                         url(r'^login/?$', 

@@ -507,9 +507,13 @@ class Act (Biddable, Event):
                  'video_choice',
                  'description',
                  'why_you'],
-        [ 'title', 'description'],
+                [ 'title', 'description', 'shows_preferences', 'performer'],
               )
     
+    @property
+    def bid_draft_fields(self):
+        return (['title', 'performer'])
+
     def __str__ (self):
         return str(self.performer) + ": "+self.title
 
@@ -547,12 +551,10 @@ class Class (Biddable, Event):
     fee = models.IntegerField(blank=True, default=0)
     other_teachers = models.CharField(max_length=128, blank=True)
     length_minutes = models.IntegerField(choices=class_length_options, 
-                                         default=60, )
+                                         default=60, blank=True)
     history =  models.TextField(max_length = 500, blank=True)
     run_before = models.TextField(max_length=500, blank=True)
-    schedule_constraints = models.CharField(max_length=128,
-                                            choices=class_schedule_options, 
-                                            blank=True)
+    schedule_constraints = models.TextField(blank=True)
     space_needs = models.CharField(max_length=128, 
                                    choices=space_options, 
                                    blank=True, 
@@ -580,8 +582,12 @@ class Class (Biddable, Event):
                   'schedule_constraints',
                   'space_needs',
               ], 
-                 [ 'title'])
+                 [ 'title', 'teacher', 'description', 'schedule_constraints'])
 
+
+    @property
+    def get_draft_fields(self):
+        return  (['title', 'teacher'])
 
     @property
     def complete(self):
@@ -672,6 +678,9 @@ class Vendor(Biddable):
     help_times = models.TextField(blank=True)
     def __unicode__(self): 
         return self.title  # "title" here is company name
+    def validation_problems_for_submit(self):
+        return []
+
 
 class AdBid(Biddable):
     '''
