@@ -17,8 +17,13 @@ If you follow the link below, you'll be discreetly whisked away to the Brown Pap
 
 <p>Some more blather here.</p>
 
-
-<p><a href='{{link}}'>Pay application fee</a></p>
+   <form action="/bpt_handoff" method="post">
+   {% csrf_token %}
+   <input type='hidden' name='bid_type' value='{{bid_type}}'>
+   <input type='hidden' name='bid_id' value='{{bid.pk}}'>
+   <input type='hidden' name='user_id' value='{{user.pk}}'>
+   <input type="submit" name="draft" value="Take me to BPT to pay!">
+   </form>
 
 
 <p>Once you pay your application fee, your application details will be locked so the reviewers can review. </p>

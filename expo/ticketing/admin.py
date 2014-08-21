@@ -13,6 +13,6 @@ admin.site.register( BrownPaperEvents )
 admin.site.register( TicketItem )
 admin.site.register( Purchaser )
 admin.site.register( Transaction )
-
+admin.site.register( Referral )
 
 

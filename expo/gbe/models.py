@@ -21,6 +21,41 @@ group_perms_map = {
 
 phone_regex='(\d{3}[-\.]?\d{3}[-\.]?\d{4})'
 
+
+
+class Room(models.Model):
+    '''
+    A room at the expo center
+    '''
+    name = models.CharField(max_length=50)
+    capacity = models.IntegerField()
+    overbook_size = models.IntegerField()
+    def __str__ (self):
+        return self.name
+    
+class Event (models.Model):
+    '''
+    Event is the base class for any scheduled happening at the expo. 
+    Events fall broadly into "shows" and "classes". Classes break down
+    further into master classes, panels, workshops, etc. Shows are not
+    biddable (though the Acts comprising them are) , but classes arise
+    from participant bids.  
+    '''
+    title = models.CharField(max_length=128)
+    description = models.TextField()  # public-facing description 
+    blurb = models.TextField()        # short description
+    duration = DurationField()
+
+
+    ## run-specific info, in case we decide to return to the run idea
+  #  room = models.ForeignKey(Room, blank=True)
+    notes = models.TextField()  #internal notes about this event
+    owner = models.ManyToManyField('Profile')  # Responsible party
+                                                
+    def __str__(self):
+        return self.title
+
+
 class Biddable (models.Model):
     '''
     Abstract base class for items which can be Bid
@@ -378,7 +413,7 @@ class TechInfo (models.Model):
 # Act #
 #######
 
-class Act (Biddable):
+class Act (Biddable, Event):
     '''
     A performance, either scheduled or proposed.
     Until approved, an Act is simply a proposal. 
@@ -477,39 +512,6 @@ class Act (Biddable):
     
     def __str__ (self):
         return str(self.performer) + ": "+self.title
-
-
-class Room(models.Model):
-    '''
-    A room at the expo center
-    '''
-    name = models.CharField(max_length=50)
-    capacity = models.IntegerField()
-    overbook_size = models.IntegerField()
-    def __str__ (self):
-        return self.name
-    
-class Event (models.Model):
-    '''
-    Event is the base class for any scheduled happening at the expo. 
-    Events fall broadly into "shows" and "classes". Classes break down
-    further into master classes, panels, workshops, etc. Shows are not
-    biddable (though the Acts comprising them are) , but classes arise
-    from participant bids.  
-    '''
-    title = models.CharField(max_length=128)
-    description = models.TextField()  # public-facing description 
-    blurb = models.TextField()        # short description
-    duration = DurationField()
-
-
-    ## run-specific info, in case we decide to return to the run idea
-  #  room = models.ForeignKey(Room, blank=True)
-    notes = models.TextField()  #internal notes about this event
-    owner = models.ManyToManyField(Profile)  # Responsible party
-                                                
-    def __str__(self):
-        return self.title
 
 class Show (Event):
     '''

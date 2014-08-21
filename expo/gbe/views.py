@@ -9,6 +9,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.forms.models import inlineformset_factory
 import gbe_forms_text
 from ticketingfuncs import compute_submission
+from ticketing.brown_paper import get_known_paid_acts
 
 def index(request):
     '''
@@ -282,14 +283,17 @@ def bid_act(request):
                 
             else:
                 act.submitted = True
-
                 act.save()
                 details = {'user':request.user,
                            'is_submission_fee':True,
+                           'bid_type':'act',
                            'bid':act}
                 return render(request, 
                               'gbe/submission.tmpl',
-                              compute_submission(details))
+                              {'user':request.user,
+                               'bid':act,
+                               'bid_type':'act',
+                               })
     
         else:
             return HttpResponseRedirect('/fail1')  
@@ -376,7 +380,6 @@ def edit_act(request, act_id):
                 
             else:
                 act.submitted = True
-
                 act.save()
                 details = {'user':request.user,
                            'is_submission_fee':True,
@@ -422,7 +425,7 @@ def view_act (request, act_id):
         act = Act.objects.filter(id=act_id)[0]
         if act.performer.contact != request.user.profile:
           return HttpResponseRedirect('/')  # just fail for now    
-        actform = ActBidForm(instance = act, prefix = 'The Act')
+        actform = ActEditForm(instance = act, prefix = 'The Act')
         performer = PersonaForm(instance = act.performer, 
                                 prefix = 'The Performer(s)')
     except IndexError:
@@ -446,7 +449,7 @@ def review_act (request, act_id):
     except Profile.DoesNotExist:
         return HttpResponseRedirect('/')   # should go to 404?
 
-    if not reviewer.user_object.is_staff:
+    if 'Act Reviewers' not in reviewer.special_privs:
         return HttpResponseRedirect('/')   # better redirect please
 
     try:
@@ -503,13 +506,18 @@ def review_act_list (request):
     try:
 
         header = Act().bid_review_header
-        acts = Act.objects.filter(submitted=True)
-        review_query = BidEvaluation.objects.filter(bid=acts).select_related('evaluator').order_by('bid', 'evaluator')
+        #acts = Act.objects.filter(submitted=True)
+        acts = get_known_paid_acts()
+      #  review_query = BidEvaluation.objects.filter(bid=acts).select_related('evaluator').order_by('bid', 'evaluator')
         rows = []
         for act in acts:
             bid_row = []
             bid_row.append(("bid", act.bid_review_summary))
-            bid_row.append(("reviews", review_query.filter(bid=act.id).select_related('evaluator').order_by('evaluator')))
+            bid_row.append(('reviews', 
+                            BidEvaluation.objects.filter(bid=act).
+                            select_related('evaluator').
+                            order_by('bid', 'evaluator')))
+#            bid_row.append(("reviews", review_query.filter(bid=act.id).select_related('evaluator').order_by('evaluator')))
             bid_row.append(("id", act.id))
             rows.append(bid_row)
     except IndexError:
@@ -1070,4 +1078,25 @@ def propose_class (request):
         context = RequestContext (request, {'form': form})
         return HttpResponse(template.render(context))
 
+def reserve_hotel (request):
+    '''
+    Reserve a hotel room. Dummy function for menu
+    '''
+    return render_to_response(request, 'gbe/hotel.tmpl', {})
 
+
+def bpt_handoff(request):
+    '''
+    Calculate a token and direct the user to BPT. 
+    Notice that this way our tokens are unique (b/c timestamped and hashed) 
+    the only way the user repeats a token is by copying it from their 
+    browser nav bar once they hit BPT - not sure what we can do to prevent this
+    '''
+    #POST contains bid_type, bid_id, user_id
+    from ticketingfuncs import *
+    link = compute_submission (request.POST['bid_type'], 
+                               request.POST['bid_id'], 
+                               request.POST['user_id'])
+           # compute_submission also creates a Referral object for this user/act
+           # combination, so we can find them again. 
+    return HttpResponseRedirect(link)

@@ -263,11 +263,11 @@ classbid_error_messages = {
         'max_length': ("The Class Length is too long."),
     }}
 
-class_schedule_options = [('0', 'Friday Afternoon'), 
-                           ('1', 'Saturday Morning'), 
-                           ('2', 'Saturday Afternoon'), 
-                           ('3', 'Sunday Morning'), 
-                           ('4', 'Sunday Afternoon')] 
+class_schedule_options = [('Friday Afternoon', 'Friday Afternoon'), 
+                           ('Saturday Morning', 'Saturday Morning'), 
+                           ('Saturday Afternoon', 'Saturday Afternoon'), 
+                           ('Sunday Morning', 'Sunday Morning'), 
+                           ('Sunday Afternoon', 'Sunday Afternoon')] 
 
 
 

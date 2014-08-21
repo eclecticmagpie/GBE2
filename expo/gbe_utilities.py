@@ -34,7 +34,7 @@ def store_base_users(base_users):
     function to store. The next function will help with this
     '''
     import pickle
-    pickle.dump(base_users, open('pickles/base_users/pkl', 'w'))
+    pickle.dump(base_users, open('pickles/base_users.pkl', 'w'))
     
 
 def select_base_users():
@@ -42,7 +42,7 @@ def select_base_users():
     Find a set of users corresponding to these usernames and return the list of Users
     '''
     from django.contrib.auth.models import User
-    usernames = ['jon', 'betty', 'hunter', 'scratch', 'marcus']
+    usernames = ['jon', 'betty', 'hunter', 'scratch', 'marcus', 'limbo_user']
     return [User.objects.get(username=uname) for uname in usernames]
 
 

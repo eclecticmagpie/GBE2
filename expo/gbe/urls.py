@@ -102,6 +102,11 @@ urlpatterns = patterns ('',
                             views.update_profile),
                         url(r'^accounts/profile/?$', 
                             views.landing_page),
+                        url(r'^bpt_handoff/?$',     # calculate token and pass user
+                            views.bpt_handoff),     # to BrownPaper Tickets
+
+
+                            
                          
 # password reset 
                         url(r'^accounts/password/reset/?$',
@@ -116,5 +121,6 @@ urlpatterns = patterns ('',
                             name="password_reset_confirm"),
                         url(r'^accounts/password/reset/complete/?$', 
                             password_reset_complete)
+
                         
                         ) 

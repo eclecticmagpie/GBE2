@@ -1,16 +1,7 @@
-# 
-# models.py - Contains Django Database Models for Ticketing - Defines Database Schema
-# edited by mdb 5/28/2014
-#
-
-# python manage.py sql ticketing
-
 from django.db import models
 from django.contrib.auth.models import User
 import gbe
 
-# Create your models here.
-    
 class BrownPaperSettings(models.Model):
     '''
     This class is used to hold basic settings for the interface with BPT.  It should
@@ -79,11 +70,11 @@ class Purchaser(models.Model):
     country = models.CharField(max_length=50, blank=True)
     email = models.CharField(max_length=50, blank=True)
     phone = models.CharField(max_length=50, blank=True)
-    reference = models.CharField(max_length=64, blank=True)
+    reference = models.CharField(max_length=64, blank=True) ## no, reference belongs to transaction
 
     # Note - if no reference exists, we have to do the hard/fun part.
     
-    matched_to_user = models.ForeignKey(User, default=None, blank=True)
+    matched_to_user = models.ForeignKey(User,  blank=True)
     
     def __unicode__(self):
         return '%s %s (%s)' % (self.first_name, self.last_name, self.email)
@@ -125,16 +116,19 @@ class Transaction(models.Model):
       cat of username-actname-date-time-index.
       -- increased size of reference in case we want to use an algorithm that produces a larger
          digest, ie sha256
+    DO NOT TRUST the amount field. We have no way of knowing the price actually paid. For 
+    example, we don't know if the user has used some sort of discount code. We can produce 
+    the expected amount for this transaction in a report, but we should not build it into the db
     '''
     
-    ticket_item = models.ForeignKey(TicketItem)
+    ticket_item = models.ForeignKey(TicketItem, blank=True)
     purchaser = models.ForeignKey(Purchaser)
-    amount = models.DecimalField(max_digits=20, decimal_places=2)
-    order_date = models.DateTimeField()
-    shipping_method = models.CharField(max_length=50)
-    order_notes = models.TextField()
-    reference = models.CharField(max_length=64)
-    payment_source = models.CharField(max_length=30)
+    amount = models.DecimalField(max_digits=20, decimal_places=2, blank=True)
+    order_date = models.DateTimeField(blank=True)
+    shipping_method = models.CharField(max_length=50, blank=True)
+    order_notes = models.TextField(blank=True)
+    reference = models.CharField(max_length=64, blank=True)
+    payment_source = models.CharField(max_length=30, blank=True)
     import_date = models.DateTimeField(auto_now=True)
     
     def __unicode__(self):
@@ -152,18 +146,19 @@ class Referral(models.Model):
        (we might not use this)
     event: the event cited in the referral. (may not correspond to what they 
         actually purchase - note that we can only pass one event to BPT)
-    transaction: the transaction to which this referral has been positively and unambiguously
-        linked.
+
 
     There are many complications about linking Transactions to Referrals and Purchasers. 
 
     '''
     user = models.ForeignKey(User)
+    gbe_event = models.ForeignKey('gbe.Event')
+    gbe_event_type = models.CharField(max_length=40, blank=True)
+    bpt_event = models.ForeignKey(BrownPaperEvents)
     datetime = models.DateTimeField(auto_now_add=True)
     reference = models.CharField(max_length=64)
     codeword = models.CharField(max_length=20)
-    event = models.ForeignKey(BrownPaperEvents)
-#    transaction = models.ForeignKey(Transaction, blank=True)
+
 
 # I want this field, but django is resisting 
 
@@ -171,4 +166,4 @@ class Referral(models.Model):
         return '%s %s %s %s' %(self.user.profile.display_name, 
                                self.datetime, 
                                self.codeword, 
-                               self.event)
+                               self.gbe_event)
