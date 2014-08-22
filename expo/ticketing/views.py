@@ -57,7 +57,7 @@ def transactions(request):
     
     if ('Sync' in request.POST):
         try:
-            count = process_bpt_order_list()
+            count = bpt_sync()
         except Exception as e:
             error = 'Error processing transactions:  ' + str(e)
         

@@ -16,16 +16,27 @@ id=%s&event_id=%s&account=%s&includetracker=1\
 '''
 
 
-
+def bpt_sync():
+    api_call = orderlist_api_url % ( get_bpt_developer_id(), 
+                                     get_bpt_act_submit_event_id(),
+                                     get_bpt_account_id(),
+    )
+        
+    result_tree = perform_bpt_api_call (api_call)
+    count = parse_and_insert (result_tree)
+    return count
 
  
 def parse_and_insert (tree):
+    count = 0
     for item in tree.findall('item'):
-        #try:
-        bpt_save_order_to_database(get_bpt_act_submit_event_id(), 
+        try:
+            bpt_save_order_to_database(get_bpt_act_submit_event_id(), 
                                        item)
-        #except:
-        #    logger.debug('problem saving order %s to db ' % item)
+            count+=1
+        except:
+            logger.debug('problem saving order %s to db ' % item)
+    return count
 
 def perform_bpt_api_call(api_call):
     '''
