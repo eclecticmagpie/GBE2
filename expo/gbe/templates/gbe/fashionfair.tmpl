@@ -51,6 +51,12 @@
 	   <div class=vdesc>
 	     {{vendor.description}}
 	   </div>
+	   {% if vendor.publish_physical_address %}
+	   <div class=vaddr>
+	     {{ vendor.physical_address }}
+	   </div>
+	    {% endif %}
+
 	 </td>
 	{% endfor %}
       </tr>
