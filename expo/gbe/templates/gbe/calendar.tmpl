@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}
+  Great Burlesque Exposition: Events Calendar
+{% endblock %}
+
+{% block content %}
+   
+
+   </div>
+
+
+
+   <table class=calendar align=center>
+   <td></td>
+   {% for location in all_locations %}
+   <td>{{ location.name }} </td>
+      {% endfor %}
+          {% for time, events in times_to_events.items %}
+          <tr class=sched_row>
+              <td>{{ time }}</td>
+              {% for location,item in events.items %}
+	     <td> {{location}}:{{item }}</td>
+{%comment%}
+                  {% for item in events.location.items %}
+      	          <td class=event>
+	     	    <div class=event_title>
+	     	      <p align=center>{{item.title}}</p>
+	   	    </div>
+	            <div class=event_desc>
+	     	      {{ item.description}}
+	   	    </div>
+	 	  </td>
+		  {% endfor %} 
+{%endcomment%}
+
+	      {% endfor %}
+      	  </tr>
+      {% endfor %} 
+  </table>
+
+{% endblock %}
