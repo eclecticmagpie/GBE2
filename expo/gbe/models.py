@@ -538,7 +538,8 @@ class Event (models.Model):
     description = models.TextField()            # public-facing description 
     blurb = models.TextField(blank=True)        # short description
     duration = DurationField()
-
+    start_time = models.TimeField(blank=True)
+    location = models.ForeignKey(Room, blank=True, null=True)
 
     ## run-specific info, in case we decide to return to the run idea
     #  room = models.ForeignKey(Room, blank=True)
@@ -551,13 +552,11 @@ class Event (models.Model):
 class Show (Event):
     '''
     A Show is an Event consisting of a sequence of Acts.
-    BB - so... what threw me is that Acts are *not* many to many with Shows.  An Act is
-    in one show and one show only.  In 9 years of running the Expo, this has never, ever changed
-    BUT - (a) changing Acts in the live DB will be painful, (b) many to many is more flexible
-    (c) - we can control with business logic, so I'm OK with leaving it.
     '''
     acts = models.ManyToManyField(Act, related_name="appearing_in", blank=True)
     mc = models.ManyToManyField(Persona, related_name="mc_for", blank=True)      
+    
+
 
     def __str__(self):
         return self.title 

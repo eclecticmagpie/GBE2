@@ -22,7 +22,7 @@ def index(request):
         try:
             profile = request.user.profile
         except Profile.DoesNotExist:
-            context_dict['alerts']= "There's been an issue with your registration. Contact registrar@burlesque-expo.com"
+            context_dict['alerts']= reg_problem_alert
             return render_to_response ('gbe/index_unregistered_user.tmpl', context_dict)
         template = loader.get_template('gbe/index_registered_user.tmpl')
         context_dict['profile'] = profile
@@ -1907,3 +1907,27 @@ def bid_changestate (request, bid_id, redirectURL):
 
     return HttpResponseRedirect(reverse(redirectURL, urlconf='gbe.urls'))
 
+def events_calendar(request):
+    '''
+    A painfully stupid approach to scheduling. Implemented as a fallback. 
+    '''
+    all_start_times = sorted(list(set([event.start_time for event in Event.objects.all()])),
+                             reverse=True)
+    all_locations = list(set([event.location for event in Event.objects.all()]))
+    
+    times_to_events = {str(start_time):
+                       {event.location: event for event in
+                        Event.objects.
+                        filter(start_time=start_time).all()} 
+                       for start_time in all_start_times }
+                       
+                          
+
+#             Event.objects.filter(start_time=event.start_time).order_by('location').all()
+#             for event in Event.objects.order_by('start_time')}
+
+    return render (request, 
+                   'gbe/calendar.tmpl',
+                   {'all_locations':all_locations,
+                    'all_start_times':all_start_times,
+                    'times_to_events':times_to_events})

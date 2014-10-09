@@ -17,6 +17,9 @@ urlpatterns = patterns ('',
                         url(r'index.html/?', 
                             views.landing_page),
 
+                        url(r'^events/?$',
+                            views.events_calendar, name='events_calendar'),
+
 # profile
                         url(r'^profile/?$',
                             views.profile, name = 'profile'),
